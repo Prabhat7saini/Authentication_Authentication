@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumberString, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumberString, IsPositive, IsString } from "class-validator";
 import { IsPasswordComplex } from "../../utils/decorators/is-password-complex.decorator";
 
 export class AdminSignUpDto {
@@ -13,6 +13,7 @@ export class AdminSignUpDto {
 
     @IsNotEmpty({ message: 'Age is required' })
     @IsNumberString({}, { message: 'Age must be a number' })
+    @IsPositive({ message: 'Age must be a non-negative number' })
     age: string
 
 

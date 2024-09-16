@@ -23,7 +23,7 @@ export class AuthService {
 
     /**
      * Registers a new admin user.
-     * @param adminUser - The details of the admin to be registered.
+     *  adminUser - The details of the admin to be registered.
      * @returns An ApiResponse indicating the result of the registration operation.
      */
     async adminRegister(adminUser: AdminSignUpDto): Promise<ApiResponse> {
@@ -45,7 +45,7 @@ export class AuthService {
 
     /**
      * Registers a new user.
-     * @param userData - The details of the user to be registered.
+     * userData - The details of the user to be registered.
      * @returns An ApiResponse indicating the result of the registration operation.
      */
     async register(userData: RegisterDto): Promise<ApiResponse> {
@@ -75,7 +75,7 @@ export class AuthService {
 
     /**
      * Logs in a user and generates an access token.
-     * @param loginData - The login credentials (email and password) for authentication.
+     * loginData - The login credentials (email and password) for authentication.
      * @returns An ApiResponse with the login result and access token if successful.
      */
     async login(loginData: LoginDto): Promise<ApiResponse> {
@@ -100,12 +100,11 @@ export class AuthService {
             }
 
             // Prepare the user object excluding sensitive data
-            const { password: _, isActive, ...userWithoutSensitiveData } = existingUser;
+            const { password: _, isActive, deletedAt,refreshToken,...userWithoutSensitiveData } = existingUser;
 
-            // Create a payload for the JWT token
+         
             const payload = { id: existingUser.id, role: existingUser.roles[0].roleName };
 
-            // Generate an access token
             const accessToken = await this.generateToken(payload, '60m');
             return this.responseService.success(SUCCESS_MESSAGES.USER_LOGIN_SUCCESSFULLY, 200, { user: userWithoutSensitiveData, accessToken });
         } catch (error) {

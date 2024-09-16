@@ -20,7 +20,7 @@ export class AuthRepository {
 
     /**
      * Registers a new user with the given data.
-     * @param userData - The data for the user to be registered.
+     *  userData - The data for the user to be registered.
      * @returns The created user entity or an error message.
      */
     async register(userData: RegisterDto): Promise<User | string> {
@@ -52,7 +52,7 @@ export class AuthRepository {
 
     /**
      * Creates a new admin with the given data.
-     * @param adminData - The data for the admin to be created.
+     *  adminData - The data for the admin to be created.
      * @returns The created admin entity.
      */
     async createAdmin(adminData: AdminSignUpDto): Promise<User> {
