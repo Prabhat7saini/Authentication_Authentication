@@ -3,12 +3,19 @@ import { registerDecorator, ValidationOptions, ValidatorConstraint, ValidatorCon
 @ValidatorConstraint({ name: 'isPositive', async: false })
 export class IsPositiveConstraint implements ValidatorConstraintInterface {
     validate(value: any): boolean {
-        // Check if value is a positive number
-        return typeof value === 'number' && value >= 0;
+        // Check if the value is a string
+        if (typeof value === 'string') {
+            // Try to convert the string to a number
+            const num = parseFloat(value);
+            // Check if the conversion was successful and the number is non-negative
+            return !isNaN(num) && num >= 0;
+        }
+        // If not a string, validation fails
+        return false;
     }
 
     defaultMessage(): string {
-        return 'Age must be a non-negative number';
+        return 'Value must be a non-negative number';
     }
 }
 

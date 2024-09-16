@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../../utils/constants/message';
-import { UpdateUserDto } from '../dto/userDto';
+import {  UpdateUserDto } from '../dto/userDto';
 
 export class UserRepository extends Repository<User> {
     // Define the number of salt rounds for password hashing
@@ -107,4 +107,7 @@ export class UserRepository extends Repository<User> {
             return false;
         }
     }
+
+
+    
 }

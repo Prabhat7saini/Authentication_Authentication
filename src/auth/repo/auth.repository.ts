@@ -3,7 +3,7 @@ import { User } from '../../user/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../../utils/constants/message';
-import { AdminSignUpDto, RegisterDto } from '../dto/authDto';
+import { AdminSignUpDto, ChangePasswordDto, RegisterDto } from '../dto/authDto';
 import { Role } from '../../user/entities/role.entity';
 import { BadRequestException, InternalServerErrorException, Logger } from '@nestjs/common';
 
@@ -78,6 +78,18 @@ export class AuthRepository {
         } catch (error) {
             this.logger.error('Admin creation failed', error.message, error.stack);
             throw new InternalServerErrorException(ERROR_MESSAGES.USER_CREATION_FAILED);
+        }
+    }
+
+
+    async changePassword(id: string, passwordChangeData: ChangePasswordDto): Promise<void | string> {
+        try {
+            const hashedPassword = await bcrypt.hash(passwordChangeData.newPassword,this.saltRounds);
+
+            
+            return
+        } catch (error) {
+
         }
     }
 }

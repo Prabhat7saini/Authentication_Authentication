@@ -1,6 +1,6 @@
-import { Injectable, Logger, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, Logger, BadRequestException, InternalServerErrorException, Req } from '@nestjs/common';
 import { UserRepository } from 'src/user/repo/user.repository';
-import { AdminSignUpDto, LoginDto, RegisterDto } from './dto/authDto';
+import { AdminSignUpDto, ChangePasswordDto, LoginDto, RegisterDto } from './dto/authDto';
 import { ResponseService } from '../utils/responses/ResponseService';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../utils/constants/message';
 import { ApiResponse } from '../utils/responses/api-response.dto';
@@ -8,6 +8,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { AuthRepository } from './repo/auth.repository';
+
+import { CustomRequest } from '../utils/interface/type';
 
 @Injectable()
 export class AuthService {
@@ -100,9 +102,9 @@ export class AuthService {
             }
 
             // Prepare the user object excluding sensitive data
-            const { password: _, isActive, deletedAt,refreshToken,...userWithoutSensitiveData } = existingUser;
+            const { password: _, isActive, deletedAt, refreshToken, ...userWithoutSensitiveData } = existingUser;
 
-         
+
             const payload = { id: existingUser.id, role: existingUser.roles[0].roleName };
 
             const accessToken = await this.generateToken(payload, '60m');
@@ -128,6 +130,38 @@ export class AuthService {
         } catch (error) {
             this.logger.error('Token generation failed', error.message, error.stack);
             throw new InternalServerErrorException('Failed to generate token');
+        }
+    }
+
+
+
+    async changePassword(@Req() req: CustomRequest, changePasswordData: ChangePasswordDto): Promise<ApiResponse> {
+        const id = req.user.id;
+
+        try {
+            const existingUser = await this.userRepository.findUser({ id });
+            if (!existingUser) {
+                return this.responseService.error(ERROR_MESSAGES.USER_NOT_FOUND, 404);
+            }
+
+            const isOldPasswordValid = await bcrypt.compare(changePasswordData.oldPassword, existingUser.password);
+            if (!isOldPasswordValid) {
+                return this.responseService.error(ERROR_MESSAGES.INVALID_OLD_PASSWORD, 400);
+            }
+
+            if (changePasswordData.newPassword !== changePasswordData.confirmPassword) {
+                return this.responseService.error(ERROR_MESSAGES.PASSWORDS_DO_NOT_MATCH, 400);
+            }
+
+            const hashedPassword = await bcrypt.hash(changePasswordData.newPassword, 12);
+            existingUser.password = hashedPassword;
+
+            await this.userRepository.save(existingUser); 
+
+            return this.responseService.success(SUCCESS_MESSAGES.PASSWORD_CHANGED);
+        } catch (error) {
+            console.error('Error changing password:', error);
+            return this.responseService.error(ERROR_MESSAGES.UNEXPECTED_ERROR, 500);
         }
     }
 }

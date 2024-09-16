@@ -22,7 +22,9 @@ export const ERROR_MESSAGES = {
     NOT_FOUND_OR_ACTIVE: (id: string) => `User with id ${id} not found or already active`,
     ADMIN_UPDATE_NOT_ALLOWED:"You are not allowed to update admin",
     REGISTER_NOT_ALLOWED: 'You are not allowed to register as an admin.',
-    ROLE_NOT_FOUND_ERROR: (roleName: string) => `Role with name ${roleName} not found`
+    ROLE_NOT_FOUND_ERROR: (roleName: string) => `Role with name ${roleName} not found`,
+    INVALID_OLD_PASSWORD:"The password for the user is invalid",
+    PASSWORDS_DO_NOT_MATCH:"The passwords for the user password and confirm password are not the same"
 
 };
 
@@ -36,4 +38,5 @@ export const SUCCESS_MESSAGES = {
     USERS_FETCHED_SUCCESSFULLY:"Users successfully fetched",
     USER_DEACTIVATED:"USER DEACTIVATED successfully",
     USER_ACTIVATED:"USER ACTIVATED successfully", 
+    PASSWORD_CHANGED:"User Password Change successfully",
 };

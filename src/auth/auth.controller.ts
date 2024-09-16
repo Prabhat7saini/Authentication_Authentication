@@ -1,8 +1,9 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AdminSignUpDto, LoginDto, RegisterDto } from './dto/authDto';
+import { AdminSignUpDto, ChangePasswordDto, LoginDto, RegisterDto } from './dto/authDto';
 import { ApiResponse } from 'src/utils/responses/api-response.dto';
 import { AuthenticationGuard } from './guard/authenticaton.guard';
+import { CustomRequest } from 'src/utils/interface/type';
 
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {
@@ -36,5 +37,11 @@ export class AuthController {
     @Post(`/signUp`)
     async Register(@Body() userData: RegisterDto): Promise<ApiResponse> {
         return this.authService.register(userData);
+    }
+
+    @UseGuards(AuthenticationGuard)
+    @Post(`/change-password`)
+    async changePassword(@Req() req: CustomRequest, @Body() userData: ChangePasswordDto): Promise<ApiResponse> {
+        return this.authService.changePassword(req, userData);
     }
 }
