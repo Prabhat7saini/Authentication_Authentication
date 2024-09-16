@@ -26,7 +26,7 @@ export class UserService {
 
             await this.userRepository.updateUser(id, userData);
 
-            return this.responseService.success(SUCCESS_MESSAGES.USER_UPDATED_SUCCESSFULLY);
+            return this.responseService.success(SUCCESS_MESSAGES.USER_UPDATED_SUCCESSFULLY,204);
         } catch (error) {
           
             console.error(`Error updating user with ID: ${id}`, error);

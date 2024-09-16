@@ -119,7 +119,7 @@ export class AdminService {
             if (!updatedUser) {
                 return this.responseService.error(ERROR_MESSAGES.USER_UPDATE_FAILED);
             }
-            return this.responseService.success(SUCCESS_MESSAGES.USER_UPDATED_SUCCESSFULLY, 200, updatedUser);
+            return this.responseService.success(SUCCESS_MESSAGES.USER_UPDATED_SUCCESSFULLY, 204, updatedUser);
         } catch (error) {
             this.logger.error('Error updating user', error.stack);
             return this.responseService.error(ERROR_MESSAGES.USER_UPDATE_FAILED, 500);
