@@ -1,5 +1,5 @@
 import { Injectable, Logger, BadRequestException, InternalServerErrorException, Req } from '@nestjs/common';
-import { UserRepository } from 'src/user/repo/user.repository';
+import { UserRepository } from '../user/repo/user.repository';
 import { AdminSignUpDto, ChangePasswordDto, LoginDto, RegisterDto } from './dto/authDto';
 import { ResponseService } from '../utils/responses/ResponseService';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../utils/constants/message';

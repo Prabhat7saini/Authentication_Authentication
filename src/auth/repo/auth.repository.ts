@@ -80,16 +80,4 @@ export class AuthRepository {
             throw new InternalServerErrorException(ERROR_MESSAGES.USER_CREATION_FAILED);
         }
     }
-
-
-    async changePassword(id: string, passwordChangeData: ChangePasswordDto): Promise<void | string> {
-        try {
-            const hashedPassword = await bcrypt.hash(passwordChangeData.newPassword,this.saltRounds);
-
-            
-            return
-        } catch (error) {
-
-        }
-    }
 }

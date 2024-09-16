@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { AdminRepository } from './repo/admin.repository';
-import { ApiResponse } from 'src/utils/responses/api-response.dto';
-import { ResponseService } from 'src/utils/responses/ResponseService';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from 'src/utils/constants/message';
-import { UpdateUserDto } from 'src/user/dto/userDto';
+import { ApiResponse } from '../utils/responses/api-response.dto';
+import { ResponseService } from '../utils/responses/ResponseService';
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../utils/constants/message';
+import { UpdateUserDto } from '../user/dto/userDto';
 
 /**
  * Service for handling administrative tasks.
@@ -51,7 +51,7 @@ export class AdminService {
             }
             return this.responseService.success(SUCCESS_MESSAGES.USERS_FETCHED_SUCCESSFULLY, 200, users);
         } catch (error) {
-            this.logger.error('Error fetching users', error.stack);
+            this.logger.error('Error fetching users', error.message);
             return this.responseService.error(error.message, 500);
         }
     }
