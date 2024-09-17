@@ -15,7 +15,7 @@ async function bootstrap() {
   app.use(cookieParser());
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT');
-  // console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
   await app.listen(port);
 }
 bootstrap();
