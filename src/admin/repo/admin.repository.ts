@@ -128,6 +128,11 @@ export class AdminRepository {
     async updateUserByAdmin(id: string, userData: UpdateUserDto): Promise<User | string> {
         try {
             const user = await this.userRepository.findUser({ id });
+
+            if(!user.isActive){
+                this.logger.warn(`You are not update the user details because the user are not active`);
+                return ERROR_MESSAGES.NOT_ALLOWED_TO_UPDATE_INACTIVE_USER
+            }
             if (!user) {
                 this.logger.warn(`inside the update by admin User with ID ${id} not found.`);
                 return ERROR_MESSAGES.USER_NOT_FOUND;
@@ -157,11 +162,11 @@ export class AdminRepository {
             if (user) {
                 delete user.refreshToken;
                 delete user.password;
-                delete user.deletedAt;
+                delete user.deletedAt; 
             }
             return user;
         } catch (error) {
-            this.logger.error('Error fetching users:', error);
+            // this.logger.error('Error fetching users:', error);
             throw new Error(ERROR_MESSAGES.USER_FETCH_FAILED);
         }
     }

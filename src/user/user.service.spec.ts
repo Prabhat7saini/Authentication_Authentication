@@ -1,11 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from './user.service';
-import { UserRepository } from './repo/user.repository';
-import { ResponseService } from '../utils/responses/ResponseService';
-import { UpdateUserDto } from './dto/userDto';
-import { User } from '../user/entities/user.entity';
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../utils/constants/message';
-
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../utils/constants/message";
+import { ApiResponse } from "../utils/responses/api-response.dto";
+import { UpdateUserDto } from "./dto/userDto";
+import { UserService } from "./user.service";
+import { UserRepository } from "./repo/user.repository";
+import { ResponseService } from "../utils/responses/ResponseService";
+import { Test, TestingModule } from "@nestjs/testing";
+import { User } from "./entities/user.entity";
 
 describe('UserService', () => {
   let userService: UserService;
@@ -35,6 +35,10 @@ describe('UserService', () => {
     userService = module.get<UserService>(UserService);
     userRepository = module.get<UserRepository>(UserRepository);
     responseService = module.get<ResponseService>(ResponseService);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('updateUser', () => {
@@ -77,59 +81,65 @@ describe('UserService', () => {
     });
   });
 
-  // describe('softDeleteUser', () => {
-  //   it('should soft delete the user successfully', async () => {
-  //     const req: CustomRequest = {
-  //       user: { id: '1', role: 'user' },
-  //       headers: {}, // Provide default mock implementations
-  //       params: {},
-  //       query: {},
-  //       body: {},
-  //       method: 'GET',
-  //       url: '/',
-  //       // Add other properties as needed
-  //     };
+  describe('softDeleteUser', () => {
+    it('should return success response if user is successfully soft deleted', async () => {
+      const req = { user: { id: 'user-id' } };
+      jest.spyOn(userRepository, 'softDeleteUser').mockResolvedValue(true);
+      jest.spyOn(responseService, 'success').mockReturnValue({
+        statusCode: 200,
+        message: SUCCESS_MESSAGES.USER_DELETED_SUCCESSFULLY,
+        success: true,
+      });
 
-  //     jest.spyOn(userRepository, 'softDeleteUser').mockResolvedValue(true);
-  //     jest.spyOn(responseService, 'success').mockReturnValue({
-  //       message: SUCCESS_MESSAGES.USER_DELETED_SUCCESSFULLY,
-  //       statusCode: 200,
-  //       success: true,
-  //     });
+      const result: ApiResponse = await userService.softDeleteUser(req as any);
 
-  //     const result = await userService.softDeleteUser(req);
-  //     expect(result).toEqual({
-  //       message: SUCCESS_MESSAGES.USER_DELETED_SUCCESSFULLY,
-  //       statusCode: 200,
-  //       success: true,
-  //     });
-  //   });
+      expect(result).toEqual({
+        statusCode: 200,
+        message: SUCCESS_MESSAGES.USER_DELETED_SUCCESSFULLY,
+        success: true,
+      });
+      expect(userRepository.softDeleteUser).toHaveBeenCalledWith('user-id');
+      expect(responseService.success).toHaveBeenCalledWith(SUCCESS_MESSAGES.USER_DELETED_SUCCESSFULLY);
+    });
 
-  //   it('should handle soft delete user error', async () => {
-  //     const req: CustomRequest = {
-  //       user: { id: '1', role: 'user' },
-  //       headers: {}, // Provide default mock implementations
-  //       params: {},
-  //       query: {},
-  //       body: {},
-  //       method: 'GET',
-  //       url: '/',
-  //       // Add other properties as needed
-  //     };
+    it('should return error response if user deletion fails', async () => {
+      const req = { user: { id: 'user-id' } };
+      jest.spyOn(userRepository, 'softDeleteUser').mockResolvedValue(false);
+      jest.spyOn(responseService, 'error').mockReturnValue({
+        statusCode: 500,
+        message: ERROR_MESSAGES.USER_DELETION_FAILED,
+        success: false,
+      });
 
-  //     jest.spyOn(userRepository, 'softDeleteUser').mockResolvedValue(false);
-  //     jest.spyOn(responseService, 'error').mockReturnValue({
-  //       message: ERROR_MESSAGES.USER_DELETION_FAILED,
-  //       statusCode: 500,
-  //       success: false,
-  //     });
+      const result: ApiResponse = await userService.softDeleteUser(req as any);
 
-  //     const result = await userService.softDeleteUser(req);
-  //     expect(result).toEqual({
-  //       message: ERROR_MESSAGES.USER_DELETION_FAILED,
-  //       statusCode: 500,
-  //       success: false,
-  //     });
-  //   });
-  // });
+      expect(result).toEqual({
+        statusCode: 500,
+        message: ERROR_MESSAGES.USER_DELETION_FAILED,
+        success: false,
+      });
+      expect(userRepository.softDeleteUser).toHaveBeenCalledWith('user-id');
+      expect(responseService.error).toHaveBeenCalledWith(ERROR_MESSAGES.USER_DELETION_FAILED, 500);
+    });
+
+    it('should return error response if an exception occurs', async () => {
+      const req = { user: { id: 'user-id' } };
+      jest.spyOn(userRepository, 'softDeleteUser').mockRejectedValue(new Error('Some error'));
+      jest.spyOn(responseService, 'error').mockReturnValue({
+        statusCode: 500,
+        message: ERROR_MESSAGES.USER_DELETION_FAILED,
+        success: false,
+      });
+
+      const result: ApiResponse = await userService.softDeleteUser(req as any);
+
+      expect(result).toEqual({
+        statusCode: 500,
+        message: ERROR_MESSAGES.USER_DELETION_FAILED,
+        success: false,
+      });
+      expect(userRepository.softDeleteUser).toHaveBeenCalledWith('user-id');
+      expect(responseService.error).toHaveBeenCalledWith(ERROR_MESSAGES.USER_DELETION_FAILED, 500);
+    });
+  });
 });

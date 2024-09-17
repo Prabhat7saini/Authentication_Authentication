@@ -24,7 +24,8 @@ export const ERROR_MESSAGES = {
     REGISTER_NOT_ALLOWED: 'You are not allowed to register as an admin.',
     ROLE_NOT_FOUND_ERROR: (roleName: string) => `Role with name ${roleName} not found`,
     INVALID_OLD_PASSWORD:"The password for the user is invalid",
-    PASSWORDS_DO_NOT_MATCH:"The passwords for the user password and confirm password are not the same"
+    PASSWORDS_DO_NOT_MATCH:"The passwords for the user password and confirm password are not the same",
+    NOT_ALLOWED_TO_UPDATE_INACTIVE_USER:"`You are not update the user details because the user are not active`"
 
 };
 

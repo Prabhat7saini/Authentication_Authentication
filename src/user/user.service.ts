@@ -20,16 +20,13 @@ export class UserService {
      * @returns An ApiResponse indicating success or failure.
      */
     async updateUser(id: string, userData: UpdateUserDto): Promise<ApiResponse> {
-        console.log(`Updating user with ID: ${id}`);
-
         try {
 
             await this.userRepository.updateUser(id, userData);
 
-            return this.responseService.success(SUCCESS_MESSAGES.USER_UPDATED_SUCCESSFULLY,204);
+            return this.responseService.success(SUCCESS_MESSAGES.USER_UPDATED_SUCCESSFULLY, 204);
         } catch (error) {
-          
-            console.error(`Error updating user with ID: ${id}`, error);
+
             return this.responseService.error(ERROR_MESSAGES.USER_UPDATE_FAILED, 500);
         }
     }
@@ -39,11 +36,8 @@ export class UserService {
      * @returns An ApiResponse indicating success or failure.
      */
     async softDeleteUser(@Req() req: CustomRequest): Promise<ApiResponse> {
-        const id = req.user.id;
-
-
-
         try {
+            const id = req.user.id;
             // Attempt to soft delete the user in the repository.
             const result = await this.userRepository.softDeleteUser(id);
 
@@ -53,8 +47,7 @@ export class UserService {
 
             return this.responseService.success(SUCCESS_MESSAGES.USER_DELETED_SUCCESSFULLY);
         } catch (error) {
-         
-            console.error('Error during soft delete:', error);
+
             return this.responseService.error(ERROR_MESSAGES.USER_DELETION_FAILED, 500);
         }
     }

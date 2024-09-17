@@ -14,8 +14,8 @@ async function bootstrap() {
   app.enableVersioning({ type: VersioningType.URI })
   app.use(cookieParser());
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT') || 4000;
-  console.log(`Server running on http://localhost:${port}`);
+  const port = configService.get<number>('PORT');
+  // console.log(`Server running on http://localhost:${port}`);
   await app.listen(port);
 }
 bootstrap();

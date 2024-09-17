@@ -51,7 +51,7 @@ export class AdminService {
             }
             return this.responseService.success(SUCCESS_MESSAGES.USERS_FETCHED_SUCCESSFULLY, 200, users);
         } catch (error) {
-            this.logger.error('Error fetching users', error.message);
+            // this.logger.error('Error fetching users', error.message);
             return this.responseService.error(error.message, 500);
         }
     }
@@ -73,7 +73,7 @@ export class AdminService {
             }
             return this.responseService.success(SUCCESS_MESSAGES.USER_DEACTIVATED);
         } catch (error) {
-            this.logger.error('Error deactivating user', error.stack);
+
             return this.responseService.error(error.message, 500);
         }
     }
@@ -95,7 +95,7 @@ export class AdminService {
             }
             return this.responseService.success(SUCCESS_MESSAGES.USER_ACTIVATED);
         } catch (error) {
-            this.logger.error('Error activating user', error.stack);
+
             return this.responseService.error(error.message, 500);
         }
     }
@@ -121,7 +121,6 @@ export class AdminService {
             }
             return this.responseService.success(SUCCESS_MESSAGES.USER_UPDATED_SUCCESSFULLY, 204, updatedUser);
         } catch (error) {
-            this.logger.error('Error updating user', error.stack);
             return this.responseService.error(ERROR_MESSAGES.USER_UPDATE_FAILED, 500);
         }
     }

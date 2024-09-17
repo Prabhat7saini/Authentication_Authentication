@@ -9,7 +9,7 @@ export class AuthorizationGuard implements CanActivate {
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         try {
             const request = context.switchToHttp().getRequest();
-            console.log(`request: ${request.user.role}`)
+            // console.log(`request: ${request.user.role}`)
             const requiredRole = this.reflection.get(ROLES_KEY, context.getHandler());
           
 

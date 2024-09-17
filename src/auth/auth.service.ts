@@ -40,7 +40,8 @@ export class AuthService {
             const user = await this.authRepository.createAdmin(adminUser);
             return this.responseService.success(SUCCESS_MESSAGES.USER_CREATED_SUCCESSFULLY, 201, user);
         } catch (error) {
-            this.logger.error('Admin registration failed', error.message, error.stack);
+            // this.logger.error('Admin registration failed', error.message, error.stack);
+
             return this.responseService.error(ERROR_MESSAGES.UNEXPECTED_ERROR, 500);
         }
     }
@@ -70,7 +71,7 @@ export class AuthService {
             }
             return this.responseService.success(SUCCESS_MESSAGES.USER_CREATED_SUCCESSFULLY, 201, user);
         } catch (error) {
-            this.logger.error('User registration failed', error.message, error.stack);
+            // this.logger.error('User registration failed', error.message, error.stack);
             return this.responseService.error(ERROR_MESSAGES.UNEXPECTED_ERROR, 500);
         }
     }
@@ -110,7 +111,7 @@ export class AuthService {
             const accessToken = await this.generateToken(payload, '60m');
             return this.responseService.success(SUCCESS_MESSAGES.USER_LOGIN_SUCCESSFULLY, 200, { user: userWithoutSensitiveData, accessToken });
         } catch (error) {
-            this.logger.error('Login failed', error.message, error.stack);
+            // this.logger.error('Login failed', error.message, error.stack);
             return this.responseService.error(ERROR_MESSAGES.UNEXPECTED_ERROR, 500);
         }
     }
@@ -128,7 +129,7 @@ export class AuthService {
                 expiresIn,
             });
         } catch (error) {
-            this.logger.error('Token generation failed', error.message, error.stack);
+            // this.logger.error('Token generation failed', error.message, error.stack);
             throw new InternalServerErrorException('Failed to generate token');
         }
     }
@@ -160,7 +161,7 @@ export class AuthService {
 
             return this.responseService.success(SUCCESS_MESSAGES.PASSWORD_CHANGED);
         } catch (error) {
-            console.error('Error changing password:', error);
+            // console.error('Error changing password:', error);
             return this.responseService.error(ERROR_MESSAGES.UNEXPECTED_ERROR, 500);
         }
     }
