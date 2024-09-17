@@ -4,10 +4,8 @@ import { UserRepository } from './repo/user.repository';
 import { ResponseService } from '../utils/responses/ResponseService';
 import { UpdateUserDto } from './dto/userDto';
 import { User } from '../user/entities/user.entity';
-import { ApiResponse } from '../utils/responses/api-response.dto';
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../utils/constants/message';
-import { CustomRequest } from '../utils/interface/type';
-import { Request } from 'express';
+
 
 describe('UserService', () => {
   let userService: UserService;

@@ -19,7 +19,7 @@ export class AuthorizationGuard implements CanActivate {
 
             return true
         } catch (error) {
-            console.log(`error in side the user authorization`, error.message);
+            // console.log(`error in side the user authorization`, error.message);
             throw error;
         }
 
