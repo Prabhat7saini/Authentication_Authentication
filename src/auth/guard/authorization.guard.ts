@@ -2,6 +2,7 @@ import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from "@
 import { Reflector } from "@nestjs/core";
 import { Observable } from "rxjs";
 import { ROLES_KEY } from "../../utils/decorators/roles.decorator";
+import { ERROR_MESSAGES } from "src/utils/constants/message";
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
@@ -14,7 +15,7 @@ export class AuthorizationGuard implements CanActivate {
           
 
             if (requiredRole !== request.user.role) {
-                throw new ForbiddenException("you do not have access to this route")
+                throw new ForbiddenException(ERROR_MESSAGES.ACCESS_DENIED)
             }
 
             return true

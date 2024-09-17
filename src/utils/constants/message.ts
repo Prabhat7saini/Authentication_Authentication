@@ -25,7 +25,8 @@ export const ERROR_MESSAGES = {
     ROLE_NOT_FOUND_ERROR: (roleName: string) => `Role with name ${roleName} not found`,
     INVALID_OLD_PASSWORD:"The password for the user is invalid",
     PASSWORDS_DO_NOT_MATCH:"The passwords for the user password and confirm password are not the same",
-    NOT_ALLOWED_TO_UPDATE_INACTIVE_USER:"`You are not update the user details because the user are not active`"
+    NOT_ALLOWED_TO_UPDATE_INACTIVE_USER:"`You are not update the user details because the user are not active`",
+    ACCESS_DENIED: "you do not have access to this route"
 
 };
 
