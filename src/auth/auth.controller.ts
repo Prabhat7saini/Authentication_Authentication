@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AdminSignUpDto, ChangePasswordDto, LoginDto, RegisterDto } from './dto/authDto';
-import { ApiResponse } from 'src/utils/responses/api-response.dto';
+import { ApiResponse } from '../utils/responses/api-response.dto';
 import { AuthenticationGuard } from './guard/authenticaton.guard';
-import { CustomRequest } from 'src/utils/interface/type';
+import { CustomRequest } from '../utils/interface/type';
 
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {

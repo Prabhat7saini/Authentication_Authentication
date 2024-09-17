@@ -4,7 +4,7 @@ import { AuthorizationGuard } from '../auth/guard/authorization.guard';
 import { AuthenticationGuard } from '../auth/guard/authenticaton.guard';
 import { Role } from '../utils/decorators/roles.decorator';
 import { ApiResponse } from '../utils/responses/api-response.dto';
-import { UpdateUserDto } from 'src/user/dto/userDto';
+import { UpdateUserDto } from '../user/dto/userDto';
 
 /**
  * Controller for handling administrative actions.
@@ -17,7 +17,7 @@ export class AdminController {
     /**
      * Endpoint to create a new role.
      * Requires admin authentication and authorization.
-     * @param role The role to be created.
+     *  role The role to be created.
      * @returns An ApiResponse indicating success or failure.
      */
     @Role('admin')
@@ -42,7 +42,7 @@ export class AdminController {
     /**
      * Endpoint to deactivate a user by their ID.
      * Requires admin authentication and authorization.
-     * @param data Contains the ID of the user to be deactivated.
+     *  data Contains the ID of the user to be deactivated.
      * @returns An ApiResponse indicating success or failure.
      */
     @Role('admin')
@@ -56,7 +56,7 @@ export class AdminController {
     /**
      * Endpoint to activate a user by their ID.
      * Requires admin authentication and authorization.
-     * @param data Contains the ID of the user to be activated.
+     *  data Contains the ID of the user to be activated.
      * @returns An ApiResponse indicating success or failure.
      */
     @Role('admin')
@@ -70,8 +70,8 @@ export class AdminController {
     /**
      * Endpoint for an admin to update user details.
      * Requires admin authentication and authorization.
-     * @param data Contains the ID of the user to be updated.
-     * @param userData The new user data to be applied.
+     *  data Contains the ID of the user to be updated.
+     *  userData The new user data to be applied.
      * @returns An ApiResponse indicating success or failure.
      */
     @Role('admin')
@@ -85,8 +85,8 @@ export class AdminController {
     /**
      * Endpoint to retrieve a specific user by their ID.
      * Requires admin authentication and authorization.
-     * @param data Contains the ID of the user to be retrieved.
-     * @returns An ApiResponse containing the user details.
+     * data Contains the ID of the user to be retrieved.
+     * @ An ApiResponse containing the user details.
      */
     @Role('admin')
     @UseGuards(AuthenticationGuard, AuthorizationGuard)

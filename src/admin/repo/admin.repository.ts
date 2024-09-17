@@ -21,7 +21,7 @@ export class AdminRepository {
         private readonly responseService: ResponseService
     ) { }
 
-    /**
+    /*
      * Creates a new role if it does not already exist.
      * role - The name of the role to be created.
      * @returns A string message if the role already exists or throws an InternalServerErrorException on failure.
@@ -41,8 +41,8 @@ export class AdminRepository {
             throw new InternalServerErrorException(error.message);
         }
     }
-
-    /**
+                             
+    /*
      * Retrieves all users with the 'user' role.
      * @returns An array of users with the 'user' role or an error message if the role is not found.
      */
@@ -67,7 +67,7 @@ export class AdminRepository {
         }
     }
 
-    /**
+    /*
      * Deactivates a user by setting their 'isActive' status to false.
      * @param id - The ID of the user to be deactivated.
      * @returns A message indicating whether the user was deactivated or not found.
@@ -94,7 +94,7 @@ export class AdminRepository {
         }
     }
 
-    /**
+    /*
      * Activates a user by setting their 'isActive' status to true.
      * @param id - The ID of the user to be activated.
      * @returns A message indicating whether the user was activated or not found.
@@ -119,7 +119,7 @@ export class AdminRepository {
         }
     }
 
-    /**
+    /*
      * Updates user information, but prevents updates to admin users.
      * @param id - The ID of the user to be updated.
      * userData - The new user data to be applied.
