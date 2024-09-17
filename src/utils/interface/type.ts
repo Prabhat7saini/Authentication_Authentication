@@ -1,8 +1,8 @@
 interface JwtPayload {
-    id: string,
-    role: string
+  id: string;
+  role: string;
 }
 
 export interface CustomRequest extends Request {
-    user?: JwtPayload
-};
+  user?: JwtPayload;
+}

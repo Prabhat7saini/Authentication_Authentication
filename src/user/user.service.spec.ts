@@ -1,11 +1,11 @@
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../utils/constants/message";
-import { ApiResponse } from "../utils/responses/api-response.dto";
-import { UpdateUserDto } from "./dto/userDto";
-import { UserService } from "./user.service";
-import { UserRepository } from "./repo/user.repository";
-import { ResponseService } from "../utils/responses/ResponseService";
-import { Test, TestingModule } from "@nestjs/testing";
-import { User } from "./entities/user.entity";
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from '../utils/constants/message';
+import { ApiResponse } from '../utils/responses/api-response.dto';
+import { UpdateUserDto } from './dto/userDto';
+import { UserService } from './user.service';
+import { UserRepository } from './repo/user.repository';
+import { ResponseService } from '../utils/responses/ResponseService';
+import { Test, TestingModule } from '@nestjs/testing';
+import { User } from './entities/user.entity';
 
 describe('UserService', () => {
   let userService: UserService;
@@ -65,7 +65,9 @@ describe('UserService', () => {
       const id = '1';
       const userData: UpdateUserDto = { name: 'Updated User' };
 
-      jest.spyOn(userRepository, 'updateUser').mockRejectedValue(new Error('Some error'));
+      jest
+        .spyOn(userRepository, 'updateUser')
+        .mockRejectedValue(new Error('Some error'));
       jest.spyOn(responseService, 'error').mockReturnValue({
         message: ERROR_MESSAGES.USER_UPDATE_FAILED,
         statusCode: 500,
@@ -99,7 +101,9 @@ describe('UserService', () => {
         success: true,
       });
       expect(userRepository.softDeleteUser).toHaveBeenCalledWith('user-id');
-      expect(responseService.success).toHaveBeenCalledWith(SUCCESS_MESSAGES.USER_DELETED_SUCCESSFULLY);
+      expect(responseService.success).toHaveBeenCalledWith(
+        SUCCESS_MESSAGES.USER_DELETED_SUCCESSFULLY,
+      );
     });
 
     it('should return error response if user deletion fails', async () => {
@@ -119,12 +123,17 @@ describe('UserService', () => {
         success: false,
       });
       expect(userRepository.softDeleteUser).toHaveBeenCalledWith('user-id');
-      expect(responseService.error).toHaveBeenCalledWith(ERROR_MESSAGES.USER_DELETION_FAILED, 500);
+      expect(responseService.error).toHaveBeenCalledWith(
+        ERROR_MESSAGES.USER_DELETION_FAILED,
+        500,
+      );
     });
 
     it('should return error response if an exception occurs', async () => {
       const req = { user: { id: 'user-id' } };
-      jest.spyOn(userRepository, 'softDeleteUser').mockRejectedValue(new Error('Some error'));
+      jest
+        .spyOn(userRepository, 'softDeleteUser')
+        .mockRejectedValue(new Error('Some error'));
       jest.spyOn(responseService, 'error').mockReturnValue({
         statusCode: 500,
         message: ERROR_MESSAGES.USER_DELETION_FAILED,
@@ -139,7 +148,10 @@ describe('UserService', () => {
         success: false,
       });
       expect(userRepository.softDeleteUser).toHaveBeenCalledWith('user-id');
-      expect(responseService.error).toHaveBeenCalledWith(ERROR_MESSAGES.USER_DELETION_FAILED, 500);
+      expect(responseService.error).toHaveBeenCalledWith(
+        ERROR_MESSAGES.USER_DELETION_FAILED,
+        500,
+      );
     });
   });
 });

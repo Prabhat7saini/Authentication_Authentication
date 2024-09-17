@@ -7,9 +7,8 @@ import { Role } from './entities/role.entity';
 import { ResponseService } from 'src/utils/responses/ResponseService';
 
 @Module({
-
-    imports: [TypeOrmModule.forFeature([User,Role, UserRepository])],
-    providers:[UserService,UserRepository,ResponseService],
-    exports:[UserRepository,UserService]
+  imports: [TypeOrmModule.forFeature([User, Role, UserRepository])],
+  providers: [UserService, UserRepository, ResponseService],
+  exports: [UserRepository, UserService],
 })
 export class UserModule {}

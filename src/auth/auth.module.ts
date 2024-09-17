@@ -1,4 +1,3 @@
-
 import { Module } from '@nestjs/common';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -17,7 +16,9 @@ import { User } from '../user/entities/user.entity';
 import { Role } from '../user/entities/role.entity';
 
 @Module({
-  imports: [UserModule,AdminModule,
+  imports: [
+    UserModule,
+    AdminModule,
     ConfigModule.forRoot(), // Ensure ConfigModule is imported
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -27,10 +28,17 @@ import { Role } from '../user/entities/role.entity';
         signOptions: { expiresIn: '60m' },
       }),
     }),
-    TypeOrmModule.forFeature([User, Role, AuthRepository, UserRepository])
+    TypeOrmModule.forFeature([User, Role, AuthRepository, UserRepository]),
   ],
-  providers: [AuthService, ResponseService, AuthenticationGuard, JwtService, AuthorizationGuard, AuthRepository],
+  providers: [
+    AuthService,
+    ResponseService,
+    AuthenticationGuard,
+    JwtService,
+    AuthorizationGuard,
+    AuthRepository,
+  ],
   controllers: [AuthController],
   exports: [AuthService, AuthenticationGuard, AuthorizationGuard], // Export if needed elsewhere
 })
-export class AuthModule { }
+export class AuthModule {}

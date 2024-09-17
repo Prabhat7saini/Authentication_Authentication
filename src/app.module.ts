@@ -14,11 +14,17 @@ import { JwtService } from '@nestjs/jwt';
 import { ResponseService } from './utils/responses/ResponseService';
 
 @Module({
-  imports: [ConfigModule.forRoot({
-    isGlobal: true,
-    envFilePath: ".local.env",
-  }), DatabaseModule, UserModule, AuthModule, AdminModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.local.env',
+    }),
+    DatabaseModule,
+    UserModule,
+    AuthModule,
+    AdminModule,
+  ],
   controllers: [AppController, UserController, AuthController, AdminController],
-  providers: [AppService,JwtService,ResponseService],
+  providers: [AppService, JwtService, ResponseService],
 })
 export class AppModule {}

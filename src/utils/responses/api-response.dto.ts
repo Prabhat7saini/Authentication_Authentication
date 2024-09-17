@@ -1,7 +1,6 @@
-
 export class ApiResponse {
-    message: string;
-    statusCode: number;
-    success: boolean;
-    data?: {}
+  message: string;
+  statusCode: number;
+  success: boolean;
+  data?: {};
 }

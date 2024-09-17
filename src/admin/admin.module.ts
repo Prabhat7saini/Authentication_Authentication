@@ -12,10 +12,17 @@ import { ResponseService } from 'src/utils/responses/ResponseService';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Role,AdminRepository, UserRepository])],
+  imports: [
+    TypeOrmModule.forFeature([User, Role, AdminRepository, UserRepository]),
+  ],
   controllers: [AdminController],
-  providers: [AdminService,AdminRepository,ResponseService,JwtService,UserRepository],
-  exports:[AdminRepository,AdminService]
-
+  providers: [
+    AdminService,
+    AdminRepository,
+    ResponseService,
+    JwtService,
+    UserRepository,
+  ],
+  exports: [AdminRepository, AdminService],
 })
 export class AdminModule {}
